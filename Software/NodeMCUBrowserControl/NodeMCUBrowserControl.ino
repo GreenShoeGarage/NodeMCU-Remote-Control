@@ -7,11 +7,11 @@
 #define DEBUG
 
 #ifdef DEBUG
- #define DEBUG_PRINTLN(x)  Serial.println (x)
- #define DEBUG_PRINT(x)    Serial.print(x)
+#define DEBUG_PRINTLN(x)  Serial.println (x)
+#define DEBUG_PRINT(x)    Serial.print(x)
 #else
- #define DEBUG_PRINTLN(x)
- #define DEBUG_PRINT(x)
+#define DEBUG_PRINTLN(x)
+#define DEBUG_PRINT(x)
 #endif
 
 
@@ -128,17 +128,29 @@ void serveWebsite() {
     client.print("<font size=\"14\"\" color=\"green\"\">ON</font>");
   }
 
-  
+
   client.print("<br>");
   client.print("<br>");
   client.println("<a href=\"/LEDON\"\"><button class=\"button\">ON</button></a>");
   client.println("<a href=\"/LEDOFF\"\"><button class=\"button\">OFF</button></a>");
   client.print("<br>");
   client.print("<br>");
-  client.print("<font size=\"14\"\" color=\"blue\"\">Sensor Reading: </font>");
-  client.print("<font size=\"14\"\" color=\"blue\"\">");
-  client.print(sensorReading);
-  client.print("</font>");
+
+  if (sensorReading > 1)
+  {
+    client.print("<font size=\"14\"\" color=\"red\"\">Sensor Reading: </font>");
+    client.print("<font size=\"14\"\" color=\"red\"\">");
+    client.print(sensorReading);
+    client.print("</font>");
+  }
+  else
+  {
+    client.print("<font size=\"14\"\" color=\"blue\"\">Sensor Reading: </font>");
+    client.print("<font size=\"14\"\" color=\"blue\"\">");
+    client.print(sensorReading);
+    client.print("</font>");
+  }
+
   client.print("<br>");
   client.println("<a href=\"/READING\"\"><button class=\"button\">GET SENSOR READING</button></a>");
   client.print("</body>");
