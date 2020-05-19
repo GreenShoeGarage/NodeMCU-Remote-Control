@@ -3,6 +3,20 @@
 #include <ESP8266WiFi.h>
 #include "secrets.h"
 
+
+#define DEBUG
+
+#ifdef DEBUG
+ #define DEBUG_PRINTLN(x)  Serial.println (x)
+ #define DEBUG_PRINT(x)    Serial.print(x)
+#else
+ #define DEBUG_PRINTLN(x)
+ #define DEBUG_PRINT(x)
+#endif
+
+
+
+
 int state = HIGH;
 int sensorReading = 0;
 
@@ -27,24 +41,24 @@ void setup()
   pinMode(Sensor, INPUT);
   digitalWrite(LED, off);
 
-  Serial.print("Connecting");
+  DEBUG_PRINT("Connecting");
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED)
   {
     delay(500);
-    Serial.print(".");
+    DEBUG_PRINT(".");
   }
-  Serial.println("WiFi connected");
+  DEBUG_PRINTLN("WiFi connected");
   server.begin();  // Starts the Server
-  Serial.println("Server started");
+  DEBUG_PRINTLN("Server started");
 
-  Serial.print("IP Address of network: "); // Prints IP address on Serial Monitor
-  Serial.println(WiFi.localIP());
-  Serial.print("Copy and paste the following URL: http://");
-  Serial.print(WiFi.localIP());
-  Serial.print(":");
-  Serial.print(port);
-  Serial.println("/");
+  DEBUG_PRINT("IP Address of network: "); // Prints IP address on Serial Monitor
+  DEBUG_PRINTLN(WiFi.localIP());
+  DEBUG_PRINT("Copy and paste the following URL: http://");
+  DEBUG_PRINT(WiFi.localIP());
+  DEBUG_PRINT(":");
+  DEBUG_PRINT(port);
+  DEBUG_PRINTLN("/");
 }
 
 void loop()
@@ -54,14 +68,14 @@ void loop()
   {
     return;
   }
-  Serial.println("Waiting for new client");
+  DEBUG_PRINTLN("Waiting for new client");
   while (!client.available())
   {
     delay(1);
   }
 
   String request = client.readStringUntil('\r');
-  Serial.println(request);
+  DEBUG_PRINTLN(request);
   client.flush();
 
 
@@ -131,6 +145,6 @@ void serveWebsite() {
   client.println("</html>");
 
   delay(1);
-  Serial.println("Client disonnected");
-  Serial.println("");
+  DEBUG_PRINTLN("Client disonnected");
+  DEBUG_PRINTLN("");
 }
