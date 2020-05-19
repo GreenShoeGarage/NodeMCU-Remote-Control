@@ -1,3 +1,5 @@
+//Based on work by https://github.com/hansjny
+
 #include <ESP8266WiFi.h>
 #include "secrets.h"
 
